@@ -15,15 +15,12 @@ summary(res_aov)
 ## bonferroni adjustment
 pairwise.t.test(Mealkits$Attitudes, Mealkits$Packaging, p.adj = "bonf")
 
-## MANOVA
-fit <- manova(cbind(Mealkits$Attitudes, Mealkits$Convenience) ~ Mealkits$Packaging , data=Mealkits)
-
-summary(fit, test = "Wilks") # ANOVA table of Wilks' lambda
-summary.aov(fit)             # univariate ANOVA tables
+## One way ANOVA
+res_aov <- aov(Mealkits$Convenience~ factor (Mealkits$Packaging) , data = Mealkits)
+summary(res_aov) 
 
 ## post-tests
 ## bonferroni adjustment
-pairwise.t.test(Mealkits$Attitudes, Mealkits$Packaging, p.adj = "bonf")
 pairwise.t.test(Mealkits$Convenience, Mealkits$Packaging, p.adj = "bonf")
 
 ## Question 2
@@ -42,6 +39,10 @@ summary(reg1)
 
 reg2 <- lm(Mealkits$Holidaymeal_Sales17 ~ Mealkits$Duration, data = Mealkits)
 summary(reg2)
+
+plot(Mealkits$Holidaymeal_Sales17,Mealkits$Duration,
+     main='Holidaymeal_Sales Vs Duration',
+     xlab='Holidaymeal_Sales', ylab='Duration')
 
 ## paired sample t-test
 t.test(Mealkits$Addon_Sales16, Mealkits$Addon_Sales17, paired = TRUE, alternative = "two.sided")
